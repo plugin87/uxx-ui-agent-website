@@ -39,26 +39,171 @@
     content="DTCG design tokens, 50 component specs, WCAG 2.2 accessibility, code for any framework, 138 design systems, and 37 objective gates. Drop it into any project.">
   <meta name="twitter:image" content="https://skills.designlazyyy.com/images/Meta/og-card.png">
 
+  <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap">
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "UX/UI Agent Skills",
-    "applicationCategory": "DeveloperApplication",
-    "operatingSystem": "Any",
-    "url": "https://skills.designlazyyy.com/",
-    "codeRepository": "https://github.com/plugin87/ux-ui-agent-skills",
-    "softwareVersion": "2.5.1",
-    "license": "https://opensource.org/licenses/MIT",
-    "author": { "@type": "Person", "name": "plugin87" },
-    "description": "A kit of structured instructions, DTCG design tokens, 50 component specs, 17 runnable skills and 138 brand-grade design systems that turns Claude into a UX/UI expert agent.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "installUrl": "https://www.npmjs.com/package/ux-ui-agent-skills"
-  }
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://skills.designlazyyy.com/#website",
+      "url": "https://skills.designlazyyy.com/",
+      "name": "UX/UI Agent Skills",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://skills.designlazyyy.com/#person"
+      },
+      "about": {
+        "@id": "https://skills.designlazyyy.com/#software"
+      }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://skills.designlazyyy.com/#person",
+      "name": "plugin87",
+      "url": "https://github.com/plugin87"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://skills.designlazyyy.com/#software",
+      "name": "UX/UI Agent Skills",
+      "alternateName": "ux-ui-agent-skills",
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "Design system tooling",
+      "operatingSystem": "macOS, Linux, Windows",
+      "url": "https://skills.designlazyyy.com/",
+      "codeRepository": "https://github.com/plugin87/ux-ui-agent-skills",
+      "downloadUrl": "https://www.npmjs.com/package/ux-ui-agent-skills",
+      "installUrl": "https://www.npmjs.com/package/ux-ui-agent-skills",
+      "softwareVersion": "2.5.1",
+      "license": "https://opensource.org/licenses/MIT",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "name": "plugin87",
+        "url": "https://github.com/plugin87"
+      },
+      "description": "A kit of structured instructions, DTCG design tokens, 50 component specs, 17 runnable skills and 138 brand-grade design systems that turns Claude into a UX/UI expert agent, targeting any framework and any design system.",
+      "featureList": [
+        "DTCG design tokens on a three-tier architecture",
+        "50 component specs with the eight states and accessibility specs",
+        "Code generation for any framework via the Adapter Protocol",
+        "138 brand-grade design systems",
+        "WCAG 2.2 AA enforcement through 37 objective gates",
+        "17 runnable skills invoked as slash commands"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "requirements": "Claude Code or any Claude-powered IDE"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://skills.designlazyyy.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is UX/UI Agent Skills?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is a kit of structured instructions, DTCG design tokens, component specs and runnable skills that turns Claude into a senior design architect. It is a knowledge layer, not a library: nothing is imported, nothing is built, and it has no runtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I install it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Run npx ux-ui-agent-skills init in the project folder, then open that folder in Claude Code. CLAUDE.md loads on its own, so there is no configuration step. To take only part of it, use npx ux-ui-agent-skills add tokens taste design-systems."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which frameworks does it support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any of them. The Framework Adapter Protocol is a universal token-to-framework contract, so the agent can target a stack with no dedicated file and write a new adapter on demand. It ships full references for React 19 with Tailwind v4, Next.js 15 App Router and SwiftUI 6, plus 16 concise adapters covering Vue, Svelte, Angular, Solid, Lit, Qwik, Astro, MUI, Mantine, Chakra, Bootstrap, React Native, Flutter, Jetpack Compose, vanilla CSS and CSS-in-JS."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it actually enforce accessibility, or just recommend it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It enforces it. Thirty-seven gates run against a real headless render in light and dark: contrast in default, hover and focus, axe-core roles and names, focus traps, RTL mirroring, target size, keyboard operability, reduced motion and silent text clipping. They exit non-zero on failure, and node scripts/accuracy_report.mjs runs them as one all-or-nothing check with no partial credit. The floor is WCAG 2.2 Level AA, with an AAA upgrade path documented."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the 138 design systems?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A library of brand-grade DESIGN.md specs covering products like Apple, Stripe, Linear, Vercel, Notion and Spotify, alongside aesthetic archetypes such as brutalism, editorial and glassmorphism. Ask for a direction by name and the tokens re-point to it while accessibility holds, because taste serves the aesthetics tier and never overrides POUR."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work with tools other than Claude Code?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It works in any Claude-powered IDE, because the kit is plain Markdown and JSON that the agent reads. Claude Code picks up CLAUDE.md automatically; elsewhere the same files can be pointed at by hand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. It is MIT licensed and published on npm as ux-ui-agent-skills. The current release is v2.5.1."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can it prove the design is good?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, and it says so. The gates prove objective correctness, never taste. For the half no script can score, /critique is an adversarial reviewer that renders the work, screenshots it at 1280 and 390 in both themes, clicks every control and argues for rejection with evidence. A passing gate is never evidence of taste."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://skills.designlazyyy.com/#how-to-use",
+      "name": "How to use UX/UI Agent Skills",
+      "totalTime": "PT2M",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Drop the kit into your project",
+          "text": "One command in the folder you are working in. Nothing to build, nothing to install, no runtime. The kit is instructions and knowledge, not a dependency.",
+          "url": "https://skills.designlazyyy.com/#how-to-use"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Open the folder in Claude Code",
+          "text": "There is no step to remember here. CLAUDE.md loads on its own and the agent picks up the persona, the token rules, the eight states, the WCAG floor and the anti-slop doctrine, plus the Request Router that pulls the right layer for the job and leaves the rest unread.",
+          "url": "https://skills.designlazyyy.com/#how-to-use"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Ask for the work in plain words",
+          "text": "No syntax to learn. Describe the outcome and the router loads the layers it needs.",
+          "url": "https://skills.designlazyyy.com/#how-to-use"
+        }
+      ]
+    }
+  ]
+}
   </script>
 
   <script src="public/head.js"></script>
@@ -112,6 +257,9 @@
       </li>
       <li class="navigation__list__item">
         <a class="navigation__list__link" href="/#design-systems">Design systems</a>
+      </li>
+      <li class="navigation__list__item">
+        <a class="navigation__list__link" href="/#faq">Questions</a>
       </li>
       <li class="navigation__list__item">
         <a class="navigation__list__link" href="/about">Inside the kit</a>
@@ -1769,6 +1917,78 @@ OK: all token files valid JSON.</span>
       </div>
     </section>
 
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq" data-theme="dark" tabindex="-1">
+      <div class="faq__inner">
+        <p class="eyebrow" data-reveal>Questions</p>
+        <h2 class="faq__lead" data-reveal>Straight answers.</h2>
+
+        <dl class="qa" data-reveal-group>
+          <div class="qa__item">
+            <dt>What is UX/UI Agent Skills?</dt>
+            <dd>It is a kit of structured instructions, DTCG design tokens, component specs and runnable skills
+              that turns Claude into a senior design architect. It is a knowledge layer, not a library: nothing is
+              imported, nothing is built, and it has no runtime.</dd>
+          </div>
+
+          <div class="qa__item">
+            <dt>How do I install it?</dt>
+            <dd>Run <code>npx ux-ui-agent-skills init</code> in the project folder, then open that folder in Claude
+              Code. <code>CLAUDE.md</code> loads on its own, so there is no configuration step. To take only part of
+              it, use <code>npx ux-ui-agent-skills add tokens taste design-systems</code>.</dd>
+          </div>
+
+          <div class="qa__item">
+            <dt>Which frameworks does it support?</dt>
+            <dd>Any of them. The Framework Adapter Protocol is a universal token-to-framework contract, so the agent
+              can target a stack with no dedicated file and write a new adapter on demand. It ships full references
+              for React 19 with Tailwind v4, Next.js 15 App Router and SwiftUI 6, plus 16 concise adapters covering
+              Vue, Svelte, Angular, Solid, Lit, Qwik, Astro, MUI, Mantine, Chakra, Bootstrap, React Native, Flutter,
+              Jetpack Compose, vanilla CSS and CSS-in-JS.</dd>
+          </div>
+
+          <div class="qa__item">
+            <dt>Does it actually enforce accessibility, or just recommend it?</dt>
+            <dd>It enforces it. Thirty-seven gates run against a real headless render in light and dark: contrast in
+              default, hover and focus, axe-core roles and names, focus traps, RTL mirroring, target size, keyboard
+              operability, reduced motion and silent text clipping. They exit non-zero on failure, and
+              <code>node scripts/accuracy_report.mjs</code> runs them as one all-or-nothing check with no partial
+              credit. The floor is WCAG 2.2 Level AA, with an AAA upgrade path documented.</dd>
+          </div>
+
+          <div class="qa__item">
+            <dt>What are the 138 design systems?</dt>
+            <dd>A library of brand-grade <code>DESIGN.md</code> specs covering products like Apple, Stripe, Linear,
+              Vercel, Notion and Spotify, alongside aesthetic archetypes such as brutalism, editorial and
+              glassmorphism. Ask for a direction by name and the tokens re-point to it while accessibility holds,
+              because taste serves the aesthetics tier and never overrides POUR.</dd>
+          </div>
+
+          <div class="qa__item">
+            <dt>Does it work with tools other than Claude Code?</dt>
+            <dd>It works in any Claude-powered IDE, because the kit is plain Markdown and JSON that the agent reads.
+              Claude Code picks up <code>CLAUDE.md</code> automatically; elsewhere the same files can be pointed at
+              by hand.</dd>
+          </div>
+
+          <div class="qa__item">
+            <dt>Is it free?</dt>
+            <dd>Yes. It is MIT licensed and published on npm as <code>ux-ui-agent-skills</code>. The current release
+              is v2.5.1.</dd>
+          </div>
+
+          <div class="qa__item">
+            <dt>Can it prove the design is good?</dt>
+            <dd>No, and it says so. The gates prove objective correctness, never taste. For the half no script can
+              score, <code>/critique</code> is an adversarial reviewer that renders the work, screenshots it at 1280
+              and 390 in both themes, clicks every control and argues for rejection with evidence. A passing gate is
+              never evidence of taste.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
     <!-- Capabilities Section -->
     <section class="work" id="capabilities" tabindex="-1">
       <div class="work--copy">
@@ -1892,6 +2112,7 @@ OK: all token files valid JSON.</span>
   <script defer src="public/reveal.js"></script>
   <script defer src="public/stars.js"></script>
 
+  <script defer src="public/analytics.js"></script>
 </body>
 
 </html>

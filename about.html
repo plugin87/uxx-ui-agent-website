@@ -39,27 +39,52 @@
         content="17 runnable skills, 37 objective gates, DTCG tokens, 50 component specs, 16 framework adapters and 138 design systems.">
     <meta name="twitter:image" content="https://skills.designlazyyy.com/images/Meta/og-card.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap">
 
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "UX/UI Agent Skills",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Any",
-      "url": "https://skills.designlazyyy.com/",
-      "codeRepository": "https://github.com/plugin87/ux-ui-agent-skills",
-      "softwareVersion": "2.5.1",
-      "license": "https://opensource.org/licenses/MIT",
-      "author": { "@type": "Person", "name": "plugin87" },
-      "description": "A kit of structured instructions, DTCG design tokens, 50 component specs, 17 runnable skills and 138 brand-grade design systems that turns Claude into a UX/UI expert agent.",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "installUrl": "https://www.npmjs.com/package/ux-ui-agent-skills"
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://skills.designlazyyy.com/about#webpage",
+          "url": "https://skills.designlazyyy.com/about",
+          "name": "Inside the kit",
+          "inLanguage": "en",
+          "description": "What ships in ux-ui-agent-skills: the runnable skills, the objective gates, and every layer the kit installs.",
+          "isPartOf": {
+            "@id": "https://skills.designlazyyy.com/#website"
+          },
+          "about": {
+            "@id": "https://skills.designlazyyy.com/#software"
+          },
+          "breadcrumb": {
+            "@id": "https://skills.designlazyyy.com/about#breadcrumb"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://skills.designlazyyy.com/about#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "UX/UI Agent Skills",
+              "item": "https://skills.designlazyyy.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Inside the kit"
+            }
+          ]
+        }
+      ]
     }
-    </script>
+  </script>
 
     <script src="public/head.js"></script>
     <link rel="stylesheet" href="public/styles.css">
@@ -320,6 +345,7 @@
 
     <script src="public/main.js"></script>
     <script defer src="public/stars.js"></script>
+  <script defer src="public/analytics.js"></script>
 </body>
 
 </html>

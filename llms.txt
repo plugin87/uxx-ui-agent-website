@@ -1,0 +1,53 @@
+# UX/UI Agent Skills
+
+> A kit of structured instructions, DTCG design tokens, component specs and
+> runnable skills that turns Claude into a senior design architect. It targets
+> any framework and any design system, and it enforces WCAG 2.2 with gates that
+> exit non-zero rather than with advice.
+
+Install with `npx ux-ui-agent-skills init`, open the folder in Claude Code, and
+`CLAUDE.md` loads on its own. There is no build step, no dependency and no
+runtime: the kit is instructions and knowledge, not a library you import.
+
+## What it ships
+
+- 13 DTCG token files on a three-tier architecture: primitive, semantic, component
+- 50 component specs from atoms to templates, each with the eight states and an accessibility spec
+- 16 framework adapters plus an Adapter Protocol that generates one on demand
+- 138 brand-grade design systems, from Apple and Stripe to Linear and Vercel
+- 17 runnable skills invoked as slash commands
+- 37 objective gates run as one all-or-nothing command
+
+## Key facts
+
+- Licence: MIT
+- Current release: v2.5.1
+- Repository: https://github.com/plugin87/ux-ui-agent-skills
+- Package: https://www.npmjs.com/package/ux-ui-agent-skills
+- Requires: Claude Code or any Claude-powered IDE. No Node or Python runtime dependency for the kit itself; the optional gate scripts use python3 and node.
+- Accessibility floor: WCAG 2.2 Level AA, with an AAA upgrade path documented
+- Dark mode: works by swapping semantic tokens, primitives never move
+
+## Pages
+
+- [Home](https://skills.designlazyyy.com/): what the kit does, how to use it, the design-system library
+- [Inside the kit](https://skills.designlazyyy.com/about): the skills, the gates and every layer the kit ships
+
+## How to use it
+
+1. `npx ux-ui-agent-skills init` in the project folder
+2. Open the folder in Claude Code
+3. Ask in plain words, for example "design a notification component with every state and its accessibility spec"
+
+Skills can also be named directly: `/brandkit`, `/redesign`, `/image-to-code`,
+`/a11y-audit`, `/apply-aesthetic`, `/critique`, `/design-tokens`,
+`/design-component`, `/design-code`, `/design-review`, `/ux-writing`,
+`/token-build`, `/migrate-design-system`, `/prototype`, `/governance`,
+`/design-qa`, `/performance`.
+
+## What it does not claim
+
+The gates prove objective correctness: token validity, contrast, state coverage,
+keyboard operability, responsive behaviour. They do not prove taste. The kit says
+so out loud and ships `/critique`, an adversarial reviewer, for the half no
+script can score. A passing gate is never evidence of taste.

@@ -1320,3 +1320,95 @@ footer .footer__social .instagram {
   box-shadow: 0 0 0 var(--border-medium) var(--color-surface-page),
     0 0 0 var(--border-thick) var(--color-text-primary);
 }
+
+/* ==================================================================
+   FAQ
+
+   Answer engines quote sentences, so the answers are written to stand on
+   their own out of context, and the markup is a description list because
+   that is what a question and its answer are.
+   ================================================================== */
+
+.faq {
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-on-dark);
+  padding: var(--space-24) var(--space-6);
+}
+
+.faq__inner {
+  margin: 0 auto;
+  max-width: var(--container-lg);
+}
+
+.faq__lead {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: clamp(var(--text-5xl), 7vw, var(--text-7xl));
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-none);
+  margin: 0 0 var(--space-16);
+  padding-bottom: 0.14em;
+}
+
+.qa {
+  margin: 0;
+}
+
+.qa__item {
+  border-top: var(--border-thin) solid var(--color-border-strong);
+  display: grid;
+  gap: var(--space-4) var(--space-10);
+  grid-template-columns: 2fr 3fr;
+  padding: var(--space-8) 0;
+}
+
+@media (max-width: 899px) {
+  .qa__item {
+    gap: var(--space-3);
+    grid-template-columns: 1fr;
+    padding: var(--space-7) 0;
+  }
+}
+
+.qa dt {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  min-width: 0;
+}
+
+@media (max-width: 899px) {
+  .qa dt {
+    font-size: var(--text-xl);
+  }
+}
+
+.qa dd {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+  min-width: 0;
+}
+
+/* an inline command is one long unbreakable token; on a 280px phone it has to
+   be allowed to break rather than widen the document */
+.qa dd code {
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-md);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  overflow-wrap: anywhere;
+  padding: var(--space-0-5) var(--space-1-5);
+}
+
+.qa dt,
+.qa dd {
+  overflow-wrap: break-word;
+}

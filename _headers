@@ -2,7 +2,7 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
-  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
@@ -12,3 +12,14 @@
 
 /images/*
   Cache-Control: public, max-age=604800
+
+# answer engines fetch these directly and should not get a stale copy
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=3600
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600

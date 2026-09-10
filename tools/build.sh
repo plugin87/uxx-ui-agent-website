@@ -13,7 +13,7 @@ cd "$(dirname "$0")/.."
 rm -rf dist
 mkdir -p dist
 
-cp index.html about.html 404.html robots.txt sitemap.xml _headers _redirects dist/
+cp index.html about.html 404.html robots.txt sitemap.xml llms.txt _headers _redirects dist/
 cp -R public images dist/
 
 # the dev-only bits never reach the CDN
