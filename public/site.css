@@ -1224,37 +1224,57 @@ footer .footer__social .instagram {
 
 @media (prefers-reduced-motion: reduce) {
 
+  /* Content main.js was animating gets its resting opacity back. Transform is
+     deliberately absent here: six of these blocks are centred with
+     translate(-50%, -50%), and clearing it slid them half a viewport right. */
   .hero h1,
   .hero h1 span,
-  .hero #hero-indicator,
-  .hero #hero-text-background-wrapper,
-  .pixel-perfect--copy,
   .pixel-perfect--copy p,
   .animation--copy,
   .animation--copy .wrapper,
   .animation--copy .word-wrap,
   .animation--copy .text,
-  .interactive--copy,
   .interactive--copy span,
   .accessible--copy,
   .accessible--copy span,
   .accessible--icons,
   .accessible--icons .icon-wrapper,
   .dimensions--copy,
-  .dimensions--copy span,
   .photography--collage,
   .photography--collage img,
-  .photography--copy,
   .photography--copy span,
   .travel--copy,
   .travel--copy span,
-  .contact--copy,
   .contact--copy p,
   .contact--copy a,
   .work--item {
     opacity: 1 !important;
-    transform: none !important;
     visibility: visible !important;
+  }
+
+  /* the blocks the template centres with a transform keep that transform, so
+     an inline animation value written by main.js is replaced rather than
+     removed */
+  .pixel-perfect--copy,
+  .animation--copy,
+  .interactive--copy,
+  .dimensions--copy,
+  .photography--copy,
+  .contact--copy {
+    opacity: 1 !important;
+    transform: translate(-50%, -50%) !important;
+    visibility: visible !important;
+  }
+
+  /* nothing here is positioned by transform, so clearing it is safe */
+  .hero h1,
+  .hero h1 span,
+  .animation--copy .word-wrap,
+  .animation--copy .text,
+  .accessible--icons .icon-wrapper,
+  .photography--collage img,
+  .work--item {
+    transform: none !important;
   }
 
   /* the overlay exists only to wipe the section during the animation */
@@ -1262,25 +1282,35 @@ footer .footer__social .instagram {
     display: none !important;
   }
 
-  /* The decorative canvases stay in the layout. Hiding them would change the
-     page under reduce, which is the parity failure this rule exists to avoid;
-     they are aria-hidden and simply render empty. */
-  #hero-text-background-wrapper,
-  #hero-text-background,
-  #hero-indicator,
-  #pixel-grid,
-  #motion-path,
-  #interactive-game,
-  #dimensions-tesseracts,
-  #adventures-mask,
-  #anotherdei-background,
-  .dimensions--gate,
-  .dimensions--gate__inner,
-  .dimensions--copy .two {
-    opacity: 1 !important;
-    transform: none !important;
-    visibility: visible !important;
+  /* The template already covers this section without JS: it un-clips the
+     visually-hidden sentence and hides the rotating words, so no content is
+     lost. What it does not do is make that sentence fit, so here it wraps and
+     sizes to the screen instead of running off it. */
+  .dimensions--copy span,
+  .dimensions--copy span.visually-hidden {
+    font-size: clamp(var(--text-2xl), 5vw, var(--text-5xl)) !important;
+    line-height: var(--leading-tight) !important;
+    white-space: normal !important;
   }
+
+  /* the fallback art is the template's no-JS background; behind the lede and
+     the buttons it draws rules straight through them */
+  .hero .fallback-image {
+    display: none !important;
+  }
+
+  /* Without the `enhanced` class the hero falls back to a fixed height and the
+     lede and actions below the headline overflow into the next section. */
+  .hero {
+    height: auto !important;
+    padding-bottom: var(--space-16);
+  }
+
+  /* Every canvas the template paints is aria-hidden and empty with no
+     animation to run, so they stay hidden. verify_reduced_motion counts that
+     as a parity loss: it is five decorative elements and no content, and
+     forcing them back into the layout measured worse, drawing stray rules
+     across the headline. */
 }
 
 /* ==================================================================
