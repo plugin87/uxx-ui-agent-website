@@ -19,6 +19,9 @@ cp -R public images dist/
 # the dev-only bits never reach the CDN
 rm -f dist/public/*.bak dist/images/.DS_Store dist/images/*/.DS_Store
 
+# long-lived asset caches are only safe when the URL changes with the file
+python3 tools/fingerprint.py
+
 echo "dist/ built:"
 du -sh dist
 find dist -type f | wc -l | xargs echo "files:"
