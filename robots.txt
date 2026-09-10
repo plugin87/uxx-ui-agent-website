@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://uxx-ui-agent-website.pages.dev/sitemap.xml
+Sitemap: https://skills.designlazyyy.com/sitemap.xml

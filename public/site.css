@@ -1282,3 +1282,41 @@ footer .footer__social .instagram {
     visibility: visible !important;
   }
 }
+
+/* ==================================================================
+   404
+
+   The template styles an error page but never shipped one, so a wrong URL
+   used to fall through to the host's default.
+   ================================================================== */
+
+.error--actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.error .button--primary {
+  background-color: var(--color-text-primary);
+  color: var(--color-surface-page);
+}
+
+.error .button--primary:hover {
+  background-color: var(--color-text-secondary);
+}
+
+.error .button--outline {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.error .button--outline:hover {
+  background-color: var(--color-action-secondary);
+  border-color: var(--color-text-primary);
+}
+
+.error .button:focus-visible {
+  box-shadow: 0 0 0 var(--border-medium) var(--color-surface-page),
+    0 0 0 var(--border-thick) var(--color-text-primary);
+}

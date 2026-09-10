@@ -1,0 +1,18 @@
+{
+  "name": "uxx-ui-agent-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page for ux-ui-agent-skills",
+  "scripts": {
+    "dev": "python3 tools/serve.py 3000",
+    "build": "bash tools/build.sh",
+    "deploy": "bash tools/build.sh && wrangler deploy",
+    "theme": "python3 tools/build_theme.py",
+    "wall": "python3 tools/build_wall.py",
+    "meta": "python3 tools/build_meta.py",
+    "gate": "python3 scripts/lint_hardcodes.py public/site.css && python3 scripts/validate_theme_refs.py public/theme.css public/site.css && python3 scripts/check_no_emoji.py index.html about.html 404.html public/site.css && python3 scripts/validate_contrast.py && node scripts/verify_responsive.mjs index.html"
+  },
+  "devDependencies": {
+    "wrangler": "^4.42.0"
+  }
+}

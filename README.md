@@ -16,24 +16,42 @@ python3 tools/serve.py 3000      # sends no-store, so edits show on reload
 
 Then open http://localhost:3000.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers)
+
+The project was created as a Worker, not a Pages project, so it deploys with
+`wrangler` reading `wrangler.jsonc`. In the dashboard:
 
 | Setting | Value |
 |---|---|
 | Build command | `bash tools/build.sh` |
-| Build output directory | `dist` |
-| Framework preset | None |
+| Deploy command | `npx wrangler deploy` |
+| Root directory | `/` |
+
+The build has to run first, because `wrangler.jsonc` serves `./dist` and
+nothing else. With the build command left as `None` the deploy fails on a
+missing directory.
+
+Custom domain: add it under the Worker's **Domains** tab, then point the site
+at it in one command.
+
+```
+python3 tools/set_domain.py skills.designlazyyy.com
+```
+
+That rewrites the canonical URL, the sitemap, the OG tags and `robots.txt`
+together, so they cannot drift apart.
 
 `tools/build.sh` copies only the web files into `dist/`. The kit itself
 (`tokens/`, `components/`, `scripts/`, `CLAUDE.md` and the rest) stays in the
 repo, where it is the point, but never reaches the CDN.
 
-`_headers` sets the cache policy and the security headers. `_redirects` folds
-`/index.html` and `/about` onto their canonical URLs. Both are Cloudflare Pages
-conventions and are copied into `dist/` by the build.
+`_headers` sets the cache policy and the security headers, `_redirects` folds
+`/index.html` and `/about` onto their canonical URLs, and `404.html` is served
+for anything else (`not_found_handling: "404-page"`). All three are copied into
+`dist/` by the build.
 
 > The canonical URL, the sitemap and the OG tags are all set to
-> `https://uxx-ui-agent-website.pages.dev`. Change that one string in
+> `https://skills.designlazyyy.com`. Change that one string in
 > `robots.txt`, `sitemap.xml`, `index.html` and `about.html` if a custom
 > domain is attached.
 

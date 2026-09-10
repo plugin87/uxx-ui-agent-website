@@ -1,0 +1,12 @@
+{
+  // Cloudflare Workers static assets. The dashboard's deploy command is
+  // `npx wrangler deploy`, which reads this file, so the build has to have
+  // produced ./dist first: set the project's Build command to
+  // `bash tools/build.sh`.
+  "name": "uxx-ui-agent-website",
+  "compatibility_date": "2026-09-10",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
