@@ -1,0 +1,1284 @@
+/* ------------------------------------------------------------------
+   Landing-page layer for ux-ui-agent-skills.
+
+   SURFACE AND SHAPE SYSTEM (three rules, no exceptions)
+
+     Fill      passive surface   --color-surface-card
+               window chrome     --color-surface-raised
+               section ground    --color-surface-sunken
+               action fills      --color-action-* / --color-button-*
+                                 (reserved for controls, never for a panel)
+
+     Outline   the outline IS the shape   --color-border-strong
+               (a chip, a divider, a control: if removing the line removes the
+                thing, the line has to be visible. Measured 4.83:1 on white.)
+
+               the fill already IS the shape  --color-border-default
+               (a code block, a screenshot tile: the surface does the work and
+                the line is only a seam, so a hairline is right.)
+
+     Note: WCAG 1.4.11 requires 3:1 for interactive controls and meaningful
+     graphics. A decorative outline around static text is not covered by it,
+     so the hairline was never a WCAG failure. It was a design failure: at
+     1.24:1 on white, and 1.02:1 on the template mint it used to sit on, the
+     chip outline was doing no work at all. Visibility is the reason here,
+     not the standard.
+
+     Radius    card or control   --radius-xl
+               inline or field   --radius-md
+               pill or dot       --radius-full
+
+   Nothing on this page picks a fourth radius.
+
+   Every value here resolves through public/theme.css, which is generated
+   from tokens/*.json by tools/build_theme.py. No hex, no raw px, no raw
+   timing: one theme, one source of truth.
+   Gated by: python3 scripts/lint_hardcodes.py public/site.css
+   ------------------------------------------------------------------ */
+
+/* Dark bands opt into the dark token set rather than restating colours. */
+.hero,
+.proof,
+.howto,
+.wall {
+  color-scheme: dark;
+}
+
+/* ---------- Navigation brand: 90s bitmap mark ---------- */
+
+.navigation__link {
+  align-items: center;
+  color: var(--color-text-on-dark);
+  display: flex;
+  gap: var(--space-3);
+  text-decoration: none;
+  white-space: nowrap;
+  width: auto;
+}
+
+.logo-mark {
+  flex-shrink: 0;
+  height: var(--space-11);
+  image-rendering: pixelated;
+  width: var(--space-11);
+}
+
+.logo-mark__plate {
+  fill: var(--color-text-on-dark);
+}
+
+.logo-mark__star {
+  fill: var(--color-text-primary);
+}
+
+.resume .logo-mark__plate,
+.error .logo-mark__plate {
+  fill: var(--color-text-primary);
+}
+
+.resume .logo-mark__star,
+.error .logo-mark__star {
+  fill: var(--color-surface-page);
+}
+
+.brand-word {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-pixel);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-tight);
+  text-transform: uppercase;
+  white-space: normal;
+  width: 7.5em;
+}
+
+.resume .brand-word,
+.error .brand-word {
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 899px) {
+  .logo-mark {
+    height: var(--space-9);
+    width: var(--space-9);
+  }
+
+  .brand-word {
+    display: none;
+  }
+}
+
+/* ---------- Hero add-ons ---------- */
+
+.hero__lede {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  margin: var(--space-7) auto 0;
+  max-width: 62ch;
+  padding: 0 var(--space-6);
+  position: relative;
+  text-align: center;
+  text-wrap: balance;
+  z-index: 1;
+}
+
+.hero__actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-7);
+  padding: 0 var(--space-6);
+  position: relative;
+  z-index: 1;
+}
+
+.js.enhanced .hero__lede,
+.js.enhanced .hero__actions {
+  animation: site-rise var(--duration-slow) var(--ease-ease-out) both;
+  animation-delay: calc(var(--duration-slow) * 2);
+}
+
+.js.enhanced .hero__actions {
+  animation-delay: calc(var(--duration-slow) * 2 + var(--duration-moderate));
+}
+
+@keyframes site-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-4));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .js.enhanced .hero__lede,
+  .js.enhanced .hero__actions {
+    animation: none;
+  }
+}
+
+/* ---------- Controls ----------
+
+   One spec for every pill on this page: the same height from the control
+   scale, the same radius, the same border. Only the fill changes between
+   variants, so a row of them can never drift out of alignment.
+   ------------------------------------------------------------------ */
+
+.button,
+.command {
+  align-items: center;
+  border: var(--border-thin) solid transparent;
+  border-radius: var(--radius-xl);
+  box-sizing: border-box;
+  display: inline-flex;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  gap: var(--space-3);
+  height: var(--control-lg);
+  justify-content: center;
+  line-height: var(--leading-none);
+  padding: 0 var(--space-5);
+  text-decoration: none;
+  transition: background-color var(--duration-base) var(--ease-ease-out),
+    border-color var(--duration-base) var(--ease-ease-out),
+    color var(--duration-base) var(--ease-ease-out);
+  white-space: nowrap;
+}
+
+/* styles.css sets `.hero span { display: inline-block }`, which outranks the
+   single-class control rule and flattens the pill back to a text box. */
+.hero__actions .command,
+.hero__actions .button {
+  display: inline-flex;
+}
+
+.button--primary {
+  background-color: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
+}
+
+.button--primary:hover {
+  background-color: var(--color-button-primary-bg-hover);
+}
+
+.button--primary:active {
+  background-color: var(--color-button-primary-bg-active);
+}
+
+.button--ghost {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-on-dark);
+}
+
+.button--ghost:hover {
+  background-color: var(--color-action-secondary);
+  border-color: var(--color-text-on-dark);
+}
+
+.button--ghost:active {
+  background-color: var(--color-action-secondary-hover);
+}
+
+.button:focus-visible,
+.command:focus-visible {
+  box-shadow: 0 0 0 var(--border-medium) var(--color-surface-sunken),
+    0 0 0 var(--border-thick) var(--color-text-on-dark);
+  outline: none;
+}
+
+/* the command is a readable artefact, not an action: same shell, mono type,
+   a filled surface instead of an outline */
+.command {
+  background-color: var(--color-surface-card);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+  gap: var(--space-2);
+  user-select: all;
+}
+
+.command__prompt {
+  color: var(--color-text-link);
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.command__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* the install command must never truncate, so on a narrow phone the pill
+   steps down a type size rather than clipping or scrolling the page */
+@media (max-width: 519px) {
+  .hero__actions {
+    padding: 0 var(--space-4);
+  }
+
+  .hero__actions .command {
+    font-size: var(--text-xs);
+    padding: 0 var(--space-4);
+  }
+
+  .hero__actions .button {
+    padding: 0 var(--space-4);
+  }
+}
+
+/* ---------- GitHub star count ---------- */
+
+.stars {
+  align-items: center;
+  border-left: var(--border-thin) solid var(--color-border-strong);
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  gap: var(--space-1-5);
+  height: var(--space-5);
+  line-height: var(--leading-none);
+  padding-left: var(--space-3);
+}
+
+.stars__icon {
+  height: var(--icon-sm);
+  width: var(--icon-sm);
+}
+
+.stars--light {
+  border-left: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+  padding-left: 0;
+}
+
+.resume--intro .stars--light {
+  display: flex;
+  margin-top: var(--space-3);
+}
+
+/* ---------- Proof strip ---------- */
+
+.proof {
+  background-color: var(--color-surface-sunken);
+  border-top: var(--border-thin) solid var(--color-border-default);
+  padding: var(--space-16) var(--space-6);
+}
+
+.proof__inner {
+  display: grid;
+  gap: var(--space-10) var(--space-6);
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 auto;
+  max-width: var(--container-lg);
+}
+
+@media (max-width: 899px) {
+  .proof__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 519px) {
+  .proof {
+    padding: var(--space-14) var(--space-6);
+  }
+
+  .proof__inner {
+    gap: var(--space-7);
+    grid-template-columns: 1fr;
+  }
+}
+
+.proof__item {
+  border-left: var(--border-thin) solid var(--color-border-strong);
+  padding-left: var(--space-5);
+}
+
+.proof__value {
+  color: var(--color-text-on-dark);
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--text-6xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-none);
+}
+
+@media (max-width: 799px) {
+  .proof__value {
+    font-size: var(--text-4xl);
+  }
+}
+
+.proof__label {
+  color: var(--color-text-secondary);
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  margin-top: var(--space-3);
+}
+
+/* ---------- Contact / install block ---------- */
+
+/* ---------- Install block ---------- */
+
+.install {
+  margin: var(--space-10) auto 0;
+  max-width: calc(var(--container-sm) - var(--space-16));
+  text-align: left;
+}
+
+.install__window {
+  background-color: var(--color-surface-sunken);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 var(--space-6) var(--space-16) rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.install__chrome {
+  align-items: center;
+  background-color: var(--color-surface-raised);
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  height: var(--space-10);
+  padding: 0 var(--space-4);
+}
+
+.install__title {
+  color: var(--color-text-tertiary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.install__body {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+  overflow-x: auto;
+  padding: var(--space-6);
+  text-align: left;
+}
+
+.install__prompt {
+  color: var(--color-text-link);
+  user-select: none;
+}
+
+.install__out {
+  color: var(--color-text-tertiary);
+}
+
+/* ---------- Capability cards ---------- */
+
+.work--item .tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.work--item .tag {
+  border: var(--border-thin) solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-none);
+  padding: var(--space-2) var(--space-3);
+}
+
+.work--item__black .tag {
+  color: var(--color-text-secondary);
+}
+
+/* ---------- Footer social ---------- */
+
+footer .footer__social .twitter {
+  background-image: url(github.svg);
+}
+
+footer .footer__social .instagram {
+  background-image: url(npm.svg);
+}
+
+/* ---------- Inside-the-kit page ---------- */
+
+.resume--intro p code,
+.work-rows--description code {
+  background-color: var(--color-surface-sunken);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: var(--space-0-5) var(--space-1-5);
+}
+
+.work-rows--description p + p {
+  margin-top: var(--space-2);
+}
+
+/* ==================================================================
+   How to use
+   ================================================================== */
+
+.howto {
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-on-dark);
+  padding: var(--space-24) var(--space-6);
+}
+
+@media (max-width: 799px) {
+  .howto {
+    padding: var(--space-24) var(--space-5);
+  }
+}
+
+.howto__inner {
+  margin: 0 auto;
+  max-width: var(--container-lg);
+}
+
+.eyebrow {
+  color: var(--color-text-link);
+  font-family: var(--font-pixel);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  margin: 0 0 var(--space-7);
+  text-transform: uppercase;
+}
+
+.howto__lead {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: clamp(var(--text-5xl), 7vw, var(--text-7xl));
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-none);
+  margin: 0 0 var(--space-20);
+  padding-bottom: 0.14em;
+}
+
+@media (max-width: 1199px) {
+  .howto__lead {
+    font-size: 8vw;
+  }
+}
+
+@media (max-width: 799px) {
+  .howto__lead {
+    font-size: 11vw;
+    margin-bottom: var(--space-12);
+  }
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.step {
+  border-top: var(--border-thin) solid var(--color-border-strong);
+  display: grid;
+  gap: var(--space-8);
+  grid-template-columns: var(--space-24) 1fr;
+  padding: var(--space-10) 0;
+}
+
+@media (max-width: 799px) {
+  .step {
+    gap: var(--space-4);
+    grid-template-columns: 1fr;
+    padding: var(--space-8) 0;
+  }
+}
+
+.step__no {
+  color: var(--color-text-link);
+  font-family: var(--font-pixel);
+  font-size: var(--text-3xl);
+  line-height: var(--leading-none);
+}
+
+/* a grid item keeps min-width:auto, so a <pre> with white-space:pre widens
+   its own track and scrolls the whole document sideways */
+.step__body,
+.howto__col {
+  min-width: 0;
+}
+
+.step__body h3 {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-3-5);
+}
+
+.step__body p {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-5);
+  max-width: 62ch;
+}
+
+.step__aside {
+  font-size: var(--text-sm) !important;
+  margin-bottom: 0 !important;
+}
+
+.step__aside code,
+.step__body p code {
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: var(--space-0-5) var(--space-1-5);
+}
+
+/* A code block is a passive surface, not a control: it takes the card fill and
+   a hairline of the same family. Only interactive borders carry 3:1. */
+.code {
+  background-color: var(--color-surface-card);
+  max-width: 100%;
+  border: var(--border-thin) solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-5);
+  overflow-x: auto;
+  padding: var(--space-5);
+}
+
+.code code {
+  /* ds-allow-hardcode:start - `inherit` takes the tokenised family from .code */
+  font-family: inherit;
+  /* ds-allow-hardcode:end */
+}
+
+.code__prompt {
+  color: var(--color-text-link);
+  user-select: none;
+}
+
+.code__dim {
+  color: var(--color-text-secondary);
+}
+
+.code--block {
+  white-space: pre;
+}
+
+.prompts {
+  display: grid;
+  gap: var(--space-2-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.prompts li {
+  border-left: var(--border-medium) solid var(--color-text-link);
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  padding-left: var(--space-4);
+}
+
+.howto__split {
+  border-top: var(--border-thin) solid var(--color-border-strong);
+  display: grid;
+  gap: var(--space-14);
+  grid-template-columns: 1fr 1fr;
+  margin-top: var(--space-6);
+  padding-top: var(--space-16);
+}
+
+@media (max-width: 899px) {
+  .howto__split {
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+}
+
+.howto__colhead {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-3-5);
+}
+
+.howto__col p {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-6);
+  max-width: 52ch;
+}
+
+.cmds {
+  display: grid;
+  gap: var(--space-3-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cmds li {
+  align-items: baseline;
+  min-width: 0;
+  border-top: var(--border-thin) solid var(--color-border-strong);
+  display: grid;
+  gap: var(--space-1) var(--space-5);
+  grid-template-columns: 10em 1fr;
+  padding-top: var(--space-3-5);
+}
+
+@media (max-width: 599px) {
+  .cmds li {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cmds code {
+  color: var(--color-text-link);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.cmds span {
+  color: var(--color-text-secondary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+/* ==================================================================
+   Design-system wall
+   ================================================================== */
+
+.wall {
+  background-color: var(--color-surface-sunken);
+  color: var(--color-text-on-dark);
+  overflow: hidden;
+  padding: var(--space-24) 0;
+}
+
+.wall__head,
+.wall__rest {
+  margin: 0 auto;
+  max-width: var(--container-lg);
+  padding: 0 var(--space-6);
+}
+
+/* display type set at leading-none puts the box bottom on the baseline, so
+   descenders overhang into whatever follows. The gap has to clear them. */
+.wall__lead {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: clamp(var(--text-5xl), 7vw, var(--text-7xl));
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tighter);
+  line-height: var(--leading-none);
+  margin: 0 0 var(--space-10);
+  padding-bottom: 0.14em;
+}
+
+.wall__note {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-16);
+  max-width: 62ch;
+}
+
+.wall__note code {
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: var(--space-0-5) var(--space-1-5);
+}
+
+.wall__rows {
+  /* ds-allow-hardcode:start - a mask reads alpha only; the colour is not a
+     design decision and must not resolve through a theme token. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  /* ds-allow-hardcode:end */
+}
+
+.wall__row {
+  display: flex;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+  width: max-content;
+}
+
+.wall__track {
+  display: flex;
+  gap: var(--space-5);
+}
+
+/* ds-allow-hardcode:start - marquee cycle lengths are choreography, not a
+   motion token: the duration scale tops out at 500ms for UI transitions. */
+.wall__row--1 {
+  animation: wall-left 150s linear infinite;
+}
+
+.wall__row--2 {
+  animation: wall-right 170s linear infinite;
+}
+
+.wall__row--3 {
+  animation: wall-left 190s linear infinite;
+}
+/* ds-allow-hardcode:end */
+
+@keyframes wall-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes wall-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .wall__row--1,
+  .wall__row--2,
+  .wall__row--3 {
+    animation: none;
+  }
+
+  .wall__row {
+    overflow-x: auto;
+    width: auto;
+  }
+}
+
+.tile {
+  background-color: var(--color-surface-card);
+  border: var(--border-thin) solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 var(--space-5) var(--space-10) rgba(0, 0, 0, 0.45);
+  flex-shrink: 0;
+  margin: 0;
+  overflow: hidden;
+  width: calc(var(--space-20) * 4);
+}
+
+/* A macOS window bar: traffic lights left, address field centred. */
+.tile__chrome {
+  align-items: center;
+  background-color: var(--color-surface-raised);
+  display: grid;
+  gap: var(--space-2);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  height: var(--space-9);
+  padding: 0 var(--space-3);
+}
+
+.tile__lights {
+  align-items: center;
+  display: flex;
+  gap: var(--space-1-5);
+}
+
+.tile__lights i {
+  border-radius: var(--radius-full);
+  display: block;
+  flex-shrink: 0;
+  height: var(--space-2-5);
+  width: var(--space-2-5);
+}
+
+.tile__lights i:nth-child(1) {
+  background-color: var(--color-feedback-error-icon);
+}
+
+.tile__lights i:nth-child(2) {
+  background-color: var(--color-feedback-warning-icon);
+}
+
+.tile__lights i:nth-child(3) {
+  background-color: var(--color-feedback-success-icon);
+}
+
+/* mirrors the traffic lights so the address field sits dead centre */
+.tile__lights--ghost {
+  width: calc(var(--space-2-5) * 3 + var(--space-1-5) * 2);
+}
+
+.tile__bar {
+  align-self: center;
+  background-color: var(--color-action-secondary-hover);
+  border-radius: var(--radius-md);
+  justify-self: stretch;
+  max-width: 100%;
+  padding: var(--space-1) var(--space-2);
+}
+
+.tile__host {
+  color: var(--color-text-primary);
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-normal);
+  line-height: var(--leading-normal);
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tile img {
+  aspect-ratio: 16 / 10;
+  background-color: var(--color-surface-raised);
+  display: block;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+  width: 100%;
+}
+
+.wall__rest {
+  margin-top: var(--space-16);
+}
+
+.wall__rest h3 {
+  color: var(--color-text-on-dark);
+  font-family: var(--font-sans);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--space-3);
+}
+
+.wall__rest p {
+  color: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: var(--text-lg);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-8);
+  max-width: 62ch;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chips li {
+  border: var(--border-thin) solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: var(--leading-none);
+  padding: var(--space-2) var(--space-3);
+}
+
+/* ==================================================================
+   Scroll choreography
+
+   The hidden state only exists while JS is running and motion is allowed
+   (html.reveal-on). No JS, or prefers-reduced-motion, and every element is
+   painted at rest, so nothing on this page is revealed by animation alone.
+   Gated by: node scripts/verify_reduced_motion.mjs
+   ================================================================== */
+
+.reveal-on [data-reveal],
+.reveal-on [data-count] {
+  opacity: 0;
+  transform: translate3d(0, var(--space-6), 0);
+  transition: opacity var(--duration-slow) var(--ease-ease-out),
+    transform var(--duration-slow) var(--ease-ease-out);
+  transition-delay: calc(var(--reveal-i) * var(--duration-fast) * 0.7);
+  will-change: opacity, transform;
+}
+
+.reveal-on [data-reveal].is-in,
+.reveal-on [data-count].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-on .howto__lead[data-reveal],
+.reveal-on .wall__lead[data-reveal] {
+  transform: translate3d(0, var(--space-10), 0);
+  transition-duration: calc(var(--duration-slow) * 1.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .reveal-on [data-reveal],
+  .reveal-on [data-count] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* the marquee owns `transform`; parallax rides the independent `translate`
+   property so the two compose instead of overwriting one another */
+.wall__row {
+  translate: var(--wall-shift) 0;
+}
+
+/* ==================================================================
+   Responsive repairs to the template
+
+   The vendor collage lets its images size past the viewport, which
+   scrolls the whole document sideways on a phone.
+   Gated by: node scripts/verify_responsive.mjs index.html
+   ================================================================== */
+
+.photography {
+  overflow: hidden;
+}
+
+.photography--collage {
+  max-width: 100%;
+}
+
+/* The collage now carries real homepages, so the cards need a browser-ish
+   crop instead of the template's free-floating artwork. */
+/* Rotated cards on a dark ground read better with depth than with an outline,
+   and an outline on a photograph is a frame the content did not ask for. */
+.photography--collage img {
+  aspect-ratio: 16 / 10;
+  border: 0;
+  box-shadow: 0 var(--space-6) var(--space-12) rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* The template's CTA is a single pill with a dashed outline behind it. With two
+   actions it needs to become a row, and the outline follows the primary one. */
+.install .contact--cta {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+  margin-top: var(--space-10);
+  width: 100%;
+}
+
+.install .contact--cta:before {
+  display: none;
+}
+
+/* public/main.js drives a scroll transform onto the first link inside
+   .contact--copy, which was written for a single CTA. With two buttons that
+   offset only one of them, so the row owns its own position. */
+.install .contact--cta a {
+  transform: none !important;
+}
+
+.install .contact--cta a:last-child {
+  background-color: transparent;
+  border: var(--border-medium) dashed var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+
+.install .contact--cta a:last-child:hover,
+.install .contact--cta a:last-child:focus-visible {
+  border-color: var(--color-text-primary);
+}
+
+/* ==================================================================
+   Capability cards
+
+   The template ships these in its own mint and sky brand colours, on a
+   fifth corner radius, with a filled grey link. None of that is in this
+   theme, and the card links are secondary navigation, not the page's one
+   affirmative action, so they take the neutral outline variant.
+   ================================================================== */
+
+.work--item,
+.work--item__green,
+.work--item__blue {
+  background-color: var(--color-surface-card);
+  border: var(--border-thin) solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  color: var(--color-text-primary);
+}
+
+.work--item__black {
+  background-color: var(--color-text-primary);
+  border-color: transparent;
+  color: var(--color-text-on-dark);
+}
+
+.work--item hr,
+.work--item__green hr,
+.work--item__blue hr {
+  background-color: var(--color-border-default);
+}
+
+.work--item__black hr {
+  background-color: var(--color-border-strong);
+}
+
+.work--item a,
+.work--item__green a,
+.work--item__blue a {
+  align-items: center;
+  background-color: transparent;
+  border: var(--border-thin) solid var(--color-border-strong);
+  border-radius: var(--radius-xl);
+  color: var(--color-text-primary);
+  display: inline-flex;
+  height: var(--control-lg);
+  justify-content: center;
+  padding: 0 var(--space-6);
+}
+
+.work--item a:hover,
+.work--item a:focus,
+.work--item__green a:hover,
+.work--item__green a:focus,
+.work--item__blue a:hover,
+.work--item__blue a:focus {
+  background-color: var(--color-action-secondary);
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary);
+}
+
+.work--item__black a {
+  border-color: var(--color-border-strong);
+  color: var(--color-text-on-dark);
+}
+
+.work--item__black a:hover,
+.work--item__black a:focus {
+  background-color: var(--color-action-secondary-hover);
+  border-color: var(--color-text-on-dark);
+  color: var(--color-text-on-dark);
+}
+
+/* The star count updates while the page is open, so a change gets a beat of
+   motion rather than silently swapping under the reader. */
+.stars--bumped {
+  animation: star-bump var(--duration-slow) var(--ease-spring);
+}
+
+@keyframes star-bump {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.18);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars--bumped {
+    animation: none;
+  }
+}
+
+/* ==================================================================
+   Navigation
+
+   Controls belong on the control scale. The template picked a height that is
+   not a step on it, so the nav sits at --control-md and every action on the
+   page sits at --control-lg.
+   ================================================================== */
+
+.navigation__list__link {
+  align-items: center;
+  border-radius: var(--radius-xl);
+  display: inline-flex;
+  height: var(--control-md);
+  padding: 0 var(--space-6);
+}
+
+/* Which page you are on was not indicated anywhere. */
+.navigation__list__link[aria-current="page"] {
+  background-color: var(--color-action-secondary);
+  color: var(--color-text-on-dark);
+}
+
+.resume .navigation__list__link[aria-current="page"],
+.error .navigation__list__link[aria-current="page"] {
+  background-color: var(--color-text-primary);
+  color: var(--color-surface-page);
+}
+
+.install .contact--cta a {
+  align-items: center;
+  display: inline-flex;
+  height: var(--control-lg);
+  justify-content: center;
+  padding: 0 var(--space-6);
+}
+
+/* ==================================================================
+   Reduced-motion parity for the template
+
+   public/main.js drives its scroll choreography by writing inline opacity
+   and transform. Under prefers-reduced-motion it stops driving them, which
+   leaves the content it was animating stuck at opacity 0: an entrance
+   animation becomes the only way to see the page. A stylesheet rule with
+   !important outranks a non-important inline style, so the resting state is
+   restored without touching the vendor bundle.
+   Gated by: node scripts/verify_reduced_motion.mjs index.html
+   ================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hero h1,
+  .hero h1 span,
+  .hero #hero-indicator,
+  .hero #hero-text-background-wrapper,
+  .pixel-perfect--copy,
+  .pixel-perfect--copy p,
+  .animation--copy,
+  .animation--copy .wrapper,
+  .animation--copy .word-wrap,
+  .animation--copy .text,
+  .interactive--copy,
+  .interactive--copy span,
+  .accessible--copy,
+  .accessible--copy span,
+  .accessible--icons,
+  .accessible--icons .icon-wrapper,
+  .dimensions--copy,
+  .dimensions--copy span,
+  .photography--collage,
+  .photography--collage img,
+  .photography--copy,
+  .photography--copy span,
+  .travel--copy,
+  .travel--copy span,
+  .contact--copy,
+  .contact--copy p,
+  .contact--copy a,
+  .work--item {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+
+  /* the overlay exists only to wipe the section during the animation */
+  .travel--overlay {
+    display: none !important;
+  }
+
+  /* The decorative canvases stay in the layout. Hiding them would change the
+     page under reduce, which is the parity failure this rule exists to avoid;
+     they are aria-hidden and simply render empty. */
+  #hero-text-background-wrapper,
+  #hero-text-background,
+  #hero-indicator,
+  #pixel-grid,
+  #motion-path,
+  #interactive-game,
+  #dimensions-tesseracts,
+  #adventures-mask,
+  #anotherdei-background,
+  .dimensions--gate,
+  .dimensions--gate__inner,
+  .dimensions--copy .two {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
+}

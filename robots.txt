@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://uxx-ui-agent-website.pages.dev/sitemap.xml
