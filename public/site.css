@@ -1306,11 +1306,50 @@ footer .footer__social .instagram {
     padding-bottom: var(--space-16);
   }
 
-  /* Every canvas the template paints is aria-hidden and empty with no
-     animation to run, so they stay hidden. verify_reduced_motion counts that
-     as a parity loss: it is five decorative elements and no content, and
-     forcing them back into the layout measured worse, drawing stray rules
-     across the headline. */
+  /* The template paints these only under `enhanced`, so with motion reduced
+     they collapse to display:none and the page loses boxes it had. All but one
+     are out of flow, so restoring them changes no layout: they are aria-hidden
+     canvases that simply render empty. */
+  #hero-text-background-wrapper,
+  #hero-text-background,
+  #pixel-grid,
+  #motion-path,
+  #interactive-game,
+  #dimensions-tesseracts,
+  #adventures-mask,
+  #anotherdei-background,
+  .dimensions--gate,
+  .dimensions--gate__inner,
+  .dimensions--copy .two {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .dimensions--copy .two {
+    display: inline-block !important;
+  }
+
+  /* The gate bars take their whole geometry from the `enhanced` rule, so
+     display alone leaves them 0px tall. They exist to mask the animation
+     behind them; with nothing to mask they keep a box and no fill. */
+  .dimensions--gate {
+    background-color: transparent !important;
+    height: var(--space-1) !important;
+    position: absolute !important;
+    width: 100% !important;
+  }
+
+  /* The scroll indicator is the one in-flow canvas. At its animated height it
+     would add most of a screen of empty hero to a page that asked for less
+     motion, so it keeps a token box: present, drawing nothing, costing a
+     hairline. */
+  #hero-indicator {
+    display: block !important;
+    height: var(--space-1) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
 }
 
 /* ==================================================================
